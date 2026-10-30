@@ -1,0 +1,96 @@
+# ==============================================================================
+# KONFIGURASI PROJEK PREDIKSI DURASI PENGIRIMAN LOGISTIK LAST-MILE (AMAZON DELIVERY)
+# Program Studi Informatika - UPN "Veteran" Yogyakarta - 2026
+# ==============================================================================
+
+project:
+  name: "Last-Mile Delivery Duration Prediction"
+  version: "1.0.0"
+  description: "Pemodelan Prediktif Waktu Pengiriman Barang untuk Efisiensi Operasional Logistik Last-Mile"
+  authors:
+    - "Zaka Ahmad Ghofari (123240144)"
+    - "Prajna Satria Aji Dharma (123249164)"
+    - "Anugrah Rajendra Hafizuddin (123240165)"
+    - "Rifki Zakaria Yahya (123240200)"
+  supervisor: "Dhimas Arief Dharmawan"
+  institution: "UPN 'Veteran' Yogyakarta"
+  year: 2026
+
+paths:
+  raw_data: "Data/amazon_delivery.csv"
+  processed_data: "Data/processed_amazon_delivery.csv"
+  model_dir: "Scripts/models"
+  model_output: "Scripts/models/best_delivery_model.joblib"
+  preprocessor_output: "Scripts/models/preprocessor.joblib"
+  metrics_output: "Scripts/models/evaluation_metrics.json"
+
+cleaning:
+  age_min_valid: 18
+  rating_max_valid: 5.0
+  cross_midnight_offset_minutes: 1440
+  earth_radius_km: 6371.0
+  gps_failure_threshold_deg: 1.0
+  area_typo_correction:
+    "Metropolitian": "Metropolitan"
+    "Metropolitian ": "Metropolitan"
+    "Urban ": "Urban"
+    "Semi-Urban ": "Semi-Urban"
+    "Other ": "Other"
+
+features:
+  id_column: "Order_ID"
+  target_column: "Delivery_Time"
+  date_column: "Order_Date"
+  order_time_column: "Order_Time"
+  pickup_time_column: "Pickup_Time"
+  
+  numerical_features:
+    - "Distance_km"
+    - "Pickup_Delay_min"
+    - "Order_Hour"
+    - "Agent_Age"
+    - "Agent_Rating"
+
+  categorical_features:
+    - "Weather"
+    - "Traffic"
+    - "Vehicle"
+    - "Area"
+    - "Category"
+
+split:
+  test_size: 0.20
+  strategy: "temporal" # Pembagian berbasis waktu (Order_Date) untuk mencegah kebocoran data masa depan
+  random_state: 42
+
+models:
+  baseline:
+    strategy: "mean"
+  ridge:
+    alpha: 1.0
+  random_forest:
+    n_estimators: 100
+    max_depth: 12
+    random_state: 42
+    n_jobs: -1
+  hist_gradient_boosting:
+    max_iter: 150
+    learning_rate: 0.08
+    max_depth: 8
+    random_state: 42
+
+business_targets:
+  mae_reduction_percent: 25.0
+  min_r2_score: 0.70
+  eta_accuracy_window_minutes: 30.0
+  min_eta_accuracy_percent: 80.0
+  extreme_delay_threshold_minutes: 180.0
+  min_delay_recall_percent: 70.0
+  max_segment_mae_ratio: 1.50
+
+deployment:
+  app_host: "127.0.0.1"
+  app_port: 8501
+  safety_buffer_minutes: 10.0 # Buffer keselamatan pengemudi agar tidak tertekan
+  confidence_interval_multiplier: 1.28 # ~80% prediction interval (z-score)
+

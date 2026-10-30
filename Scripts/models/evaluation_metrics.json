@@ -1,0 +1,99 @@
+{
+  "model_comparison": {
+    "Dummy (Baseline)": {
+      "MAE_minutes": 41.57,
+      "MAE_reduction_percent": 0.0,
+      "RMSE_minutes": 52.23,
+      "R2_score": -0.0002,
+      "ETA_accuracy_30min_percent": 44.14,
+      "Delay_recall_180min_percent": 0.0
+    },
+    "Ridge Linear Regression": {
+      "MAE_minutes": 25.47,
+      "MAE_reduction_percent": 38.72,
+      "RMSE_minutes": 32.35,
+      "R2_score": 0.6162,
+      "ETA_accuracy_30min_percent": 66.1,
+      "Delay_recall_180min_percent": 28.34
+    },
+    "Random Forest Regressor": {
+      "MAE_minutes": 17.6,
+      "MAE_reduction_percent": 57.65,
+      "RMSE_minutes": 22.73,
+      "R2_score": 0.8106,
+      "ETA_accuracy_30min_percent": 82.77,
+      "Delay_recall_180min_percent": 73.78
+    },
+    "HistGradientBoosting Regressor": {
+      "MAE_minutes": 17.71,
+      "MAE_reduction_percent": 57.41,
+      "RMSE_minutes": 22.77,
+      "R2_score": 0.8099,
+      "ETA_accuracy_30min_percent": 82.96,
+      "Delay_recall_180min_percent": 72.72
+    }
+  },
+  "best_model_name": "HistGradientBoosting Regressor",
+  "segment_consistency": {
+    "Area": {
+      "Metropolitan": {
+        "MAE": 17.71,
+        "ratio_to_overall": 1.0,
+        "satisfies_consistency": true
+      },
+      "Other": {
+        "MAE": 17.71,
+        "ratio_to_overall": 1.0,
+        "satisfies_consistency": true
+      },
+      "Semi-Urban": {
+        "MAE": 20.17,
+        "ratio_to_overall": 1.14,
+        "satisfies_consistency": true
+      },
+      "Urban": {
+        "MAE": 17.65,
+        "ratio_to_overall": 1.0,
+        "satisfies_consistency": true
+      }
+    },
+    "Vehicle": {
+      "bicycle": {
+        "MAE": 5.39,
+        "ratio_to_overall": 0.3,
+        "satisfies_consistency": true
+      },
+      "motorcycle": {
+        "MAE": 19.62,
+        "ratio_to_overall": 1.11,
+        "satisfies_consistency": true
+      },
+      "scooter": {
+        "MAE": 14.98,
+        "ratio_to_overall": 0.85,
+        "satisfies_consistency": true
+      },
+      "van": {
+        "MAE": 15.24,
+        "ratio_to_overall": 0.86,
+        "satisfies_consistency": true
+      }
+    }
+  },
+  "feature_names": {
+    "categorical": [
+      "Weather",
+      "Traffic",
+      "Vehicle",
+      "Area",
+      "Category"
+    ],
+    "numerical": [
+      "Distance_km",
+      "Pickup_Delay_min",
+      "Order_Hour",
+      "Agent_Age_Imputed",
+      "Agent_Rating_Clipped"
+    ]
+  }
+}
